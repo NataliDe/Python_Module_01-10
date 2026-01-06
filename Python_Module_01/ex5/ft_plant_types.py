@@ -97,7 +97,7 @@ class Tree(Plant):
         Returns:
             Estimated shade area.
         """
-        return (self.trunk_diameter * self.trunk_diameter) // 32
+        return self.trunk_diameter * 2
 
     def info(self) -> str:
         """
@@ -152,15 +152,12 @@ def main() -> None:
 
     flowers = [
         Flower("Rose", 25, 30, "red"),
-        Flower("Tulip", 20, 25, "yellow"),
     ]
     trees = [
         Tree("Oak", 500, 1825, 50),
-        Tree("Pine", 400, 1500, 35),
     ]
     vegetables = [
         Vegetable("Tomato", 80, 90, "summer", "vitamin C"),
-        Vegetable("Carrot", 30, 60, "autumn", "beta-carotene"),
     ]
 
     for flower in flowers:
