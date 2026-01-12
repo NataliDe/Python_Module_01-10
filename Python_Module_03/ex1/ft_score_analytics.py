@@ -1,8 +1,29 @@
-#!/usr/bin/env python3
+"""
+Player Score Analytics.
+
+This module analyzes player scores provided via command-line arguments.
+It demonstrates:
+- parsing numeric input safely
+- basic list processing
+- simple statistical calculations
+"""
+
 import sys
 
 
 def parse_scores(argv: list[str]) -> list[int]:
+    """
+    Parse command-line arguments into a list of integer scores.
+
+    Each argument is converted to an integer. Invalid values are ignored
+    with an informative message.
+
+    Args:
+        argv: List of strings representing command-line arguments.
+
+    Returns:
+        A list of valid integer scores.
+    """
     scores: list[int] = []
     for arg in argv:
         try:
@@ -13,18 +34,31 @@ def parse_scores(argv: list[str]) -> list[int]:
 
 
 def main() -> None:
+    """
+    Run the player score analytics program.
+
+    This function:
+    - reads scores from command-line arguments
+    - validates input
+    - computes basic statistics (total, average, min, max, range)
+    - prints the results
+    """
     print("=== Player Score Analytics ===")
 
     if len(sys.argv) == 1:
-        print("No scores provided. Usage: "
-              "python3 ft_score_analytics.py <score1> <score2> ...")
+        print(
+            "No scores provided. Usage: "
+            "python3 ft_score_analytics.py <score1> <score2> ..."
+        )
         return
 
     scores = parse_scores(sys.argv[1:])
 
     if not scores:
-        print("No valid scores provided. Usage: "
-              "python3 ft_score_analytics.py <score1> <score2> ...")
+        print(
+            "No valid scores provided. Usage: "
+            "python3 ft_score_analytics.py <score1> <score2> ..."
+        )
         return
 
     total_players = len(scores)

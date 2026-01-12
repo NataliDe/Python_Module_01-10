@@ -1,8 +1,27 @@
-#!/usr/bin/env python3
+"""
+Command Quest.
+
+This module demonstrates how to access and process command-line
+arguments using sys.argv.
+It shows how to:
+- retrieve the program name
+- count command-line arguments
+- iterate over provided arguments
+"""
+
 import sys
 
 
 def main() -> None:
+    """
+    Run the Command Quest program.
+
+    This function:
+    - prints the program name
+    - counts command-line arguments
+    - handles the case when no arguments are provided
+    - displays each argument with its index
+    """
     print("=== Command Quest ===")
 
     program_name = sys.argv[0]

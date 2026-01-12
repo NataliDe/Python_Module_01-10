@@ -1,102 +1,119 @@
 #!/usr/bin/env python3
+"""
+ft_analytics_dashboard.py
+
+Authorized:
+- List/dict/set comprehensions
+- len(), print(), sum(), max(), min(), sorted()
+
+Goal:
+Demonstrate comprehension mastery by transforming simple, hardcoded
+gaming data into useful analytics.
+"""
 
 
 def category(score: int) -> str:
-    if score > 2000:
+    """Return a score category label for a numeric score."""
+    if score >= 2000:
         return "high"
-    if score >= 1200:
+    if score >= 1000:
         return "medium"
     return "low"
 
 
 def main() -> None:
+    """Run the analytics dashboard demo."""
     print("=== Game Analytics Dashboard ===")
 
+    # --- Sample data (hardcoded, simple) ---
     scores = {
         "alice": 2300,
         "bob": 1800,
         "charlie": 2150,
         "diana": 2050,
     }
-
-    achievements = {
-        "alice": {
-            "first_kill",
-            "level_10",
-            "boss_slayer",
-            "explorer",
-            "collector"
-            },
-        "bob": {"first_kill", "level_10", "explorer"},
-        "charlie": {
-            "level_10",
-            "boss_slayer",
-            "treasure_hunter",
-            "speed_demon",
-            "explorer",
-            "strategist",
-            "perfectionist",
-        },
-        "diana": {"first_kill", "level_10", "treasure_hunter", "explorer"},
-    }
-
-    active_players = {"alice", "bob", "charlie"}
+    active_players = ["alice", "bob", "charlie"]
     regions = {
         "alice": "north",
         "bob": "east",
         "charlie": "central",
-        "diana": "north"
-        }
-
-    print("=== Dict Comprehension Examples ===")
-
-    player_scores = {
-        player: score
-        for player, score in scores.items()
-        if player in active_players
+        "diana": "north",
+    }
+    achievements = {
+        "alice": [
+            "first_kill",
+            "level_10", "boss_slayer", "treasure_hunter", "speed"
+            ],
+        "bob": ["first_kill", "level_10", "collector"],
+        "charlie": [
+            "first_kill",
+            "level_10",
+            "boss_slayer",
+            "perfectionist",
+            "speed",
+            "explorer",
+            "builder",
+        ],
+        "diana": ["first_kill", "boss_slayer", "speed", "explorer"],
     }
 
-    categories = {"high", "medium", "low"}
-    cats = {}
+    print("\n=== List Comprehension Examples ===")
 
-    for cat in categories:
+    high_scorers = [p for p, s in scores.items() if s > 2000]
+    scores_doubled = [s * 2 for s in scores.values()]
+    active = [p for p in active_players if p in scores]
+
+    print(f"High scorers (>2000): {high_scorers}")
+    print(f"Scores doubled: {scores_doubled}")
+    print(f"Active players: {active}")
+
+    print("\n=== Dict Comprehension Examples ===")
+
+    player_scores = {p: s for p, s in scores.items() if p in active_players}
+    score_categories = {}
+    for k in {"high", "medium", "low"}:
         count = 0
-        for score in scores.values():
-            if category(score) == cat:
+        for s in scores.values():
+            if category(s) == k:
                 count += 1
-        cats[cat] = count
-
-    ach_counts = {
-        player: len(achs)
-        for player, achs in achievements.items()
-    }
+        score_categories[k] = count
+    achievement_counts = {p: len(a) for p, a in achievements.items()}
 
     print(f"Player scores: {player_scores}")
-    print(f"Score categories: {cats}")
-    print(f"Achievement counts: {ach_counts}")
+    print(f"Score categories: {score_categories}")
+    print(f"Achievement counts: {achievement_counts}")
 
-    print("=== Set Comprehension Examples ===")
+    print("\n=== Set Comprehension Examples ===")
+
+    # set comprehension !! OMG
     unique_players = {p for p in scores.keys()}
-    unique_ach = {a for aset in achievements.values() for a in aset}
+    # dla koznogo spysku ach, dla koznogo ach dodaj do a
+    unique_achievements = {
+                    a for ach_list in achievements.values()
+                    for a in ach_list}
     active_regions = {regions[p] for p in active_players}
 
     print(f"Unique players: {unique_players}")
-    print(f"Unique achievements: {unique_ach}")
+    print(f"Unique achievements: {unique_achievements}")
     print(f"Active regions: {active_regions}")
 
-    print("=== Combined Analysis ===")
-    total_players = len(scores)
-    total_unique_ach = len(unique_ach)
-    avg_score = sum(scores.values()) / len(scores)
-    top_player = max(scores, key=lambda k: scores[k])
+    print("\n=== Combined Analysis ===")
+
+    total_players = len(unique_players)
+    total_unique_ach = len(unique_achievements)
+
+    all_scores = [s for s in scores.values()]
+    avg_score = sum(all_scores) / len(all_scores)
+
+    top_player = max(scores, key=scores.get)
     top_score = scores[top_player]
-    top_ach = len(achievements.get(top_player, set()))
+    top_ach = achievement_counts[top_player]
 
     print(f"Total players: {total_players}")
     print(f"Total unique achievements: {total_unique_ach}")
     print(f"Average score: {avg_score}")
-    print(f"Top performer: {top_player} ({top_score} points, "
-          f"{top_ach} achievements)")
+    print(f"Top performer: "
+          f"{top_player} ({top_score} points, {top_ach} achievements)")
 
 
 if __name__ == "__main__":
