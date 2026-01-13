@@ -10,27 +10,6 @@ player achievements:
 """
 
 
-def count_occurrences(player_sets: dict[str, set[str]]) -> dict[str, int]:
-    """
-    Count how many players have each achievement.
-
-    Args:
-        player_sets: Dictionary mapping player names to sets of achievements.
-
-    Returns:
-        A dictionary mapping each achievement to the number of players
-        who have it.
-    """
-    counts: dict[str, int] = {}
-    for ach_set in player_sets.values():
-        for ach in ach_set:
-            if ach in counts:
-                counts[ach] += 1
-            else:
-                counts[ach] = 1
-    return counts
-
-
 def main() -> None:
     """
     Run the achievement tracker demo.
@@ -43,61 +22,69 @@ def main() -> None:
     """
     print("=== Achievement Tracker System ===")
 
-    players_raw: dict[str, list[str]] = {
-        "alice": ["first_kill", "level_10", "treasure_hunter", "speed_demon"],
-        "bob": ["first_kill", "level_10", "boss_slayer", "collector"],
-        "charlie": [
-            "level_10",
-            "treasure_hunter",
-            "boss_slayer",
-            "speed_demon",
-            "perfectionist",
-        ],
-    }
+    # Achievements for each player
+    alice = set([
+        "first_kill",
+        "level_10",
+        "treasure_hunter",
+        "speed_demon"
+    ])
 
-    # Convert raw lists to sets to ensure uniqueness
-    player_sets: dict[str, set[str]] = {}
-    for player, achievements in players_raw.items():
-        player_sets[player] = set(achievements)
+    bob = set([
+        "first_kill",
+        "level_10",
+        "boss_slayer",
+        "collector"
+    ])
 
-    # Print achievements per player
-    for player, achievements in player_sets.items():
-        print(f"Player {player} achievements: {achievements}")
+    charlie = set([
+        "level_10",
+        "treasure_hunter",
+        "boss_slayer",
+        "speed_demon",
+        "perfectionist"
+    ])
+
+    print(f"Player alice achievements: {alice}")
+    print(f"Player bob achievements: {bob}")
+    print(f"Player charlie achievements: {charlie}")
 
     print("=== Achievement Analytics ===")
 
-    # Find all unique achievements across all players
-    all_unique = set()
-    for achievements in player_sets.values():
-        all_unique = all_unique.union(achievements)
+    # All unique achievements
+    all_achievements = alice.union(bob).union(charlie)
+    print(f"All unique achievements: {all_achievements}")
+    print(f"Total unique achievements: {len(all_achievements)}")
 
-    print(f"All unique achievements: {all_unique}")
-    print(f"Total unique achievements: {len(all_unique)}")
+    # Common achievements (shared by all players)
+    common_all = alice.intersection(bob).intersection(charlie)
+    print(f"Common to all players: {common_all}")
 
-    # Find achievements common to all players
-    common = None
-    for achievements in player_sets.values():
-        if common is None:
-            common = achievements
-        else:
-            common = common.intersection(achievements)
+    # Rare achievements (only one player has them)
+    rare = set()
 
-    if common is None:
-        common = set()
-    print(f"Common to all players: {common}")
+    for achievement in all_achievements:
+        count = 0
+        if achievement in alice:
+            count += 1
+        if achievement in bob:
+            count += 1
+        if achievement in charlie:
+            count += 1
+        if count == 1:
+            rare.add(achievement)
 
-    # Find rare achievements (owned by exactly one player)
-    counts = count_occurrences(player_sets)
-    rare = {ach for ach, c in counts.items() if c == 1}
     print(f"Rare achievements (1 player): {rare}")
 
-    # Compare achievements between Alice and Bob
-    alice = player_sets["alice"]
-    bob = player_sets["bob"]
+    # Player comparisons
+    alice_bob_common = alice.intersection(bob)
+    print(f"Alice vs Bob common: {alice_bob_common}")
 
-    print(f"Alice vs Bob common: {alice.intersection(bob)}")
-    print(f"Alice unique: {alice.difference(bob)}")
-    print(f"Bob unique: {bob.difference(alice)}")
+    alice_unique = alice.difference(bob)
+    print(f"Alice unique: {alice_unique}")
+
+    bob_unique = bob.difference(alice)
+    print(f"Bob unique: {bob_unique}")
 
 
 if __name__ == "__main__":
