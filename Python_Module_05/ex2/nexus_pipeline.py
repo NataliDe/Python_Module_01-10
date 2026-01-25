@@ -57,7 +57,7 @@ class InputStage:
 
 class TransformStage:
     def process(self, data: Any) -> Any:
-        # проста трансформація"
+        # проста pseudo трансформація"
         # Якщо dict додаємо прапорець "ok"
         if isinstance(data, dict):
             data = dict(data)
