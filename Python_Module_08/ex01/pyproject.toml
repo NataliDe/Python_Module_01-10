@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "matrix-loading"
+version = "0.1.0"
+description = "Exercise 01: Loading Programs"
+authors = ["<ndemkiv@student.42warsaw.pl>"]
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+pandas = "*"
+numpy = "*"
+matplotlib = "*"
+requests = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

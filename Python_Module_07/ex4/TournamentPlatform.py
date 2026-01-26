@@ -39,18 +39,38 @@ class TournamentPlatform:
 
     def get_leaderboard(self) -> list:
         values = list(self.cards.values())
-        values.sort(key=lambda c: c.rating, reverse=True)
-        return values
+
+        # беремо рейтинги всіх карт
+        ratings = []
+        for card in values:
+            ratings.append(card.rating)
+
+        # сортуємо рейтинги від більшого до меншого
+        ratings.sort(reverse=True)
+
+        # будуємо лідерборд у правильному порядку
+        leaderboard = []
+        for rating in ratings:
+            for card in values:
+                if card.rating == rating and card not in leaderboard:
+                    leaderboard.append(card)
+                    break
+
+        return leaderboard
 
     def generate_tournament_report(self) -> dict:
         total = len(self.cards)
-        avg = 0
-        if total > 0:
-            avg = sum(c.rating for c in self.cards.values()) // total
 
-        status = "empty"
+        total_rating = 0
+        for card in self.cards.values():
+            total_rating += card.rating
+
         if total > 0:
+            avg = total_rating // total
             status = "active"
+        else:
+            avg = 0
+            status = "empty"
 
         return {
             "total_cards": total,
