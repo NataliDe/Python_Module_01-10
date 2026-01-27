@@ -1,0 +1,63 @@
+# Evaluation Commands for Python Module 08
+
+# Go to repository
+cd Python_Module_08
+
+# === EXERCISE 0: construct ===
+
+# Run without virtualenv
+python3 ex0/construct.py
+
+# Create virtual environment
+python3 -m venv matrix_env
+
+# Activate virtual environment
+source matrix_env/bin/activate
+
+# Run inside virtualenv
+python3 ex0/construct.py
+
+
+# === EXERCISE 01: loading ===
+
+# Run without dependencies
+python3 ex01/loading.py
+
+# Install dependencies with pip
+pip install -r ex01/requirements.txt
+
+# Run after pip install
+python3 ex01/loading.py
+
+# Deactivate virtualenv
+deactivate
+
+# Run with Poetry
+cd ex01
+poetry install
+poetry run python loading.py
+cd ..
+
+
+# === EXERCISE 02: oracle ===
+
+# Create virtual environment
+python3 -m venv ex02_env
+source ex02_env/bin/activate
+
+# Install python-dotenv
+python3 -m pip install python-dotenv
+# (alternative if pip is blocked)
+# sudo apt install python3-dotenv
+
+# Create .env from example
+cp ex02/.env.example ex02/.env
+
+# Run oracle with .env
+python3 ex02/oracle.py
+
+# Override with environment variables
+MATRIX_MODE=production API_KEY=secret123 python3 ex02/oracle.py
+
+# Deactivate
+deactivate
