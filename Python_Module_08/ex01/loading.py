@@ -94,8 +94,9 @@ def run_analysis() -> None:
     rng = np.random.default_rng(42)  # випадкові числа будуть однаковими
     signal = rng.normal(loc=0.0, scale=1.0, size=n_points).cumsum()
 
-    df = pd.DataFrame({"tick": range(n_points), "signal": signal})
+    df = pd.DataFrame({"tick": range(n_points), "signal": signal})  # exel
     df["moving_avg"] = df["signal"].rolling(window=30, min_periods=1).mean()
+    # last 30 avg бере середнє по рухомому вікну
 
     print("Generating visualization...")
 
