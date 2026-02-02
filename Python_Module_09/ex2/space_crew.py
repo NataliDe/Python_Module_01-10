@@ -6,7 +6,7 @@ Exercise 2: Space Crew Management
 Nested Pydantic models + mission-level validation (Pydantic v2).
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from datetime import datetime
 from enum import Enum

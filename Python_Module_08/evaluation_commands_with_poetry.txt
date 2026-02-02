@@ -1,0 +1,109 @@
+# Full Evaluation Commands (Ubuntu) — WITH Poetry
+# Assumes: clean Ubuntu system, internet available
+
+# =====================
+# GO TO REPOSITORY
+# =====================
+cd Python_Module_08
+
+
+# =====================
+# BASIC SYSTEM CHECK
+# =====================
+
+python3 --version
+python3 -m venv --help
+
+
+# =====================
+# INSTALL POETRY
+# =====================
+# Official Poetry installation (local to user)
+
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Add Poetry to PATH (needed for current shell)
+export PATH="$HOME/.local/bin:$PATH"
+
+poetry --version
+
+
+# =====================
+# EXERCISE 0: construct
+# =====================
+
+# Run without virtualenv
+python3 ex0/construct.py
+
+# Create virtual environment
+python3 -m venv matrix_env
+source matrix_env/bin/activate
+
+# Run inside virtualenv
+python3 ex0/construct.py
+
+deactivate
+
+
+# =====================
+# EXERCISE 01: loading (pip)
+# =====================
+
+# Create clean venv
+python3 -m venv ex01_env
+source ex01_env/bin/activate
+
+# Run without dependencies
+python3 ex01/loading.py
+
+# Install dependencies with pip
+python3 -m pip install -r ex01/requirements.txt
+
+# Run after pip install
+python3 ex01/loading.py
+
+deactivate
+
+
+# =====================
+# EXERCISE 01: loading (Poetry)
+# =====================
+
+cd ex01
+poetry install
+poetry run python loading.py
+cd ..
+
+
+# =====================
+# EXERCISE 02: oracle
+# =====================
+
+# Create venv
+python3 -m venv ex02_env
+source ex02_env/bin/activate
+
+# Install python-dotenv
+python3 -m pip install python-dotenv
+
+# Prepare .env (DO NOT COMMIT)
+cp ex02/.env.example ex02/.env
+
+# Run oracle with .env
+python3 ex02/oracle.py
+
+# Override using environment variables
+MATRIX_MODE=production API_KEY=secret123 python3 ex02/oracle.py
+
+deactivate
+
+
+# =====================
+# OPTIONAL: STYLE CHECK
+# =====================
+
+python3 -m venv lint_env
+source lint_env/bin/activate
+python3 -m pip install flake8
+flake8 ex0 ex01 ex02
+deactivate

@@ -15,7 +15,7 @@ from typing import Optional
 from pydantic import BaseModel, Field, model_validator
 
 
-class ContactType(str, Enum):
+class ContactType(str, Enum):  # значення поводяться як рядки
     """Allowed alien contact types."""
     radio = "radio"
     visual = "visual"
@@ -40,8 +40,8 @@ class AlienContact(BaseModel):
     contact_type: ContactType
     signal_strength: float = Field(
         ...,
-        ge=0.0,
-        le=10.0,
+        ge=0.0,  # greater or equal
+        le=10.0,  # less or equal
     )
     duration_minutes: int = Field(
         ...,

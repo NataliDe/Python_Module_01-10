@@ -91,7 +91,7 @@ def run_analysis() -> None:
     n_points = 1000
     print(f"Processing {n_points} data points...")
 
-    rng = np.random.default_rng(42)
+    rng = np.random.default_rng(42)  # випадкові числа будуть однаковими
     signal = rng.normal(loc=0.0, scale=1.0, size=n_points).cumsum()
 
     df = pd.DataFrame({"tick": range(n_points), "signal": signal})
