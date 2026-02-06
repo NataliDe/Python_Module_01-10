@@ -1,17 +1,6 @@
-"""
-scope_mysteries.py (Exercise 2: Memory Depths)
-
-Directory: ex2/
-Files to Submit: scope_mysteries.py
-Authorized: nonlocal, print()
-"""
-
 
 def mage_counter() -> callable:
-    """
-    Return a function that counts how many times it has been called.
-    Starts from 1 and persists between calls (closure state).
-    """
+
     count = 0
 
     def counter() -> int:
@@ -23,10 +12,7 @@ def mage_counter() -> callable:
 
 
 def spell_accumulator(initial_power: int) -> callable:
-    """
-    Return a function that accumulates power over time.
-    Each call adds the given amount and returns the new total.
-    """
+
     total = initial_power
 
     def add_power(amount: int) -> int:
@@ -34,7 +20,6 @@ def spell_accumulator(initial_power: int) -> callable:
         try:
             total += amount
         except TypeError:
-            # Graceful fallback if amount isn't a number
             return total
         return total
 
@@ -42,10 +27,6 @@ def spell_accumulator(initial_power: int) -> callable:
 
 
 def enchantment_factory(enchantment_type: str) -> callable:
-    """
-    Return a function that applies the specified enchantment to an item name.
-    Format: "enchantment_type item_name" (e.g. "Flaming Sword")
-    """
 
     def enchant(item_name: str) -> str:
         try:
@@ -57,17 +38,13 @@ def enchantment_factory(enchantment_type: str) -> callable:
 
 
 def memory_vault() -> dict[str, callable]:
-    """
-    Return a dict with 'store' and 'recall' functions.
-    Uses closure to keep private storage.
-    """
+
     storage: dict[str, object] = {}
 
     def store(key: str, value: object) -> None:
         try:
             storage[key] = value
         except Exception:
-            # Do nothing (graceful)
             return
 
     def recall(key: str) -> object:
@@ -82,14 +59,35 @@ def memory_vault() -> dict[str, callable]:
 
 
 if __name__ == "__main__":
+    # --- Extra test data (as requested) ---
+    initial_powers = [70, 67, 37]
+    power_additions = [10, 19, 12, 16, 18]
+    enchantment_types = ["Radiant", "Windy", "Earthen"]
+    items_to_enchant = ["Armor", "Sword", "Ring", "Wand"]
+
     print("\nTesting mage counter...")
     counter = mage_counter()
     print(f"Call 1: {counter()}")
     print(f"Call 2: {counter()}")
     print(f"Call 3: {counter()}")
 
+    print("\nTesting spell accumulator...")
+    for start in initial_powers:
+        acc = spell_accumulator(start)
+        print(f"\nStart power: {start}")
+        for add in power_additions:
+            print(f" +{add} => {acc(add)}")
+
     print("\nTesting enchantment factory...")
-    flaming = enchantment_factory("Flaming")
-    frozen = enchantment_factory("Frozen")
-    print(flaming("Sword"))
-    print(frozen("Shield"))
+    for ench in enchantment_types:
+        enchant = enchantment_factory(ench)
+        for item in items_to_enchant:
+            print(enchant(item))
+
+    print("\nTesting memory vault...")
+    vault = memory_vault()
+    vault["store"]("first_power", initial_powers[0])
+    vault["store"]("last_item", items_to_enchant[-1])
+    print("Recall first_power:", vault["recall"]("first_power"))
+    print("Recall last_item:", vault["recall"]("last_item"))
+    print("Recall missing_key:", vault["recall"]("missing_key"))
