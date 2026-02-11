@@ -1,28 +1,9 @@
-"""
-decorator_mastery.py (Exercise 4: Master's Tower)
-
-Directory: ex4/
-Files to Submit: decorator_mastery.py
-Authorized (core): functools.wraps, staticmethod, print()
-
-Goal:
-- Implement decorators: spell_timer, power_validator, retry_spell
-- Demonstrate @staticmethod with MageGuild.validate_mage_name
-- Use power_validator(min_power=10) on MageGuild.cast_spell
-"""
 
 from functools import wraps
 import time
 
 
 def spell_timer(func: callable) -> callable:
-    """
-    Time execution decorator:
-    - Print "Casting function_name..." before execution
-    - Print "Spell completed in time seconds" after execution
-    - Use functools.wraps
-    - Return original result
-    """
     @wraps(func)
     def wrapper(*args, **kwargs):
         print(f"Casting {func.__name__}...")
@@ -37,13 +18,6 @@ def spell_timer(func: callable) -> callable:
 
 
 def power_validator(min_power: int) -> callable:
-    """
-    Parameterized validation decorator:
-    - Validate power >= min_power
-    - If invalid: return "Insufficient power for this spell"
-    - Use functools.wraps
-    """
-
     def decorator(func: callable) -> callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -69,12 +43,6 @@ def power_validator(min_power: int) -> callable:
 
 
 def retry_spell(max_attempts: int) -> callable:
-    """
-    Retry decorator:
-    - If function raises, retry up to max_attempts times
-    - Print: "Spell failed, retrying... (attempt n/max_attempts)"
-    - If all fail: return "Spell casting failed after max_attempts attempts"
-    """
     def decorator(func: callable) -> callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -94,20 +62,13 @@ def retry_spell(max_attempts: int) -> callable:
                         f"Spell casting failed after :{max_attempts} attempts"
                         )
             return f"Spell casting failed after {max_attempts} attempts"
-
         return wrapper
-
     return decorator
 
 
 class MageGuild:
     @staticmethod
     def validate_mage_name(name: str) -> bool:
-        """
-        Name is valid if:
-        - at least 3 characters (ignoring leading/trailing spaces)
-        - contains only letters and spaces
-        """
         cleaned = name.strip()
         if len(cleaned) < 3:
             return False
@@ -121,9 +82,10 @@ class MageGuild:
         return f"Successfully cast {spell_name} with {power} power"
 
 
+@retry_spell(max_attempts=3)
 @spell_timer
 def fireball() -> str:
-    time.sleep(0.101)  # to resemble the expected example timing
+    time.sleep(0.101)
     return "Fireball cast!"
 
 

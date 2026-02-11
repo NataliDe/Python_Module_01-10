@@ -1,17 +1,5 @@
-"""
-scope_mysteries.py (Exercise 2: Memory Depths)
-
-Directory: ex2/
-Files to Submit: scope_mysteries.py
-Authorized: nonlocal, print()
-"""
-
-
 def mage_counter() -> callable:
-    """
-    Return a function that counts how many times it has been called.
-    Starts from 1 and persists between calls (closure state).
-    """
+
     count = 0
 
     def counter() -> int:
@@ -23,10 +11,7 @@ def mage_counter() -> callable:
 
 
 def spell_accumulator(initial_power: int) -> callable:
-    """
-    Return a function that accumulates power over time.
-    Each call adds the given amount and returns the new total.
-    """
+
     total = initial_power
 
     def add_power(amount: int) -> int:
@@ -42,10 +27,6 @@ def spell_accumulator(initial_power: int) -> callable:
 
 
 def enchantment_factory(enchantment_type: str) -> callable:
-    """
-    Return a function that applies the specified enchantment to an item name.
-    Format: "enchantment_type item_name" (e.g. "Flaming Sword")
-    """
 
     def enchant(item_name: str) -> str:
         try:
@@ -57,10 +38,7 @@ def enchantment_factory(enchantment_type: str) -> callable:
 
 
 def memory_vault() -> dict[str, callable]:
-    """
-    Return a dict with 'store' and 'recall' functions.
-    Uses closure to keep private storage.
-    """
+
     storage: dict[str, object] = {}
 
     def store(key: str, value: object) -> None:

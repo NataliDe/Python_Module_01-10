@@ -11,7 +11,6 @@ from typing import List, Dict, Any
 class FuncMageDataGenerator:
     """Generate test data for FuncMage Chronicles exercises."""
 
-    # Fantasy-themed data pools
     MAGE_NAMES = [
         "Alex",
         "Jordan",
