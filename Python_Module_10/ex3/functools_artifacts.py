@@ -46,7 +46,7 @@ def memoized_fibonacci(n: int) -> int:
 def spell_dispatcher() -> callable:
 
     @functools.singledispatch
-    def dispatch(arg):
+    def dispatch(arg):  # dija za zamowczuwanniam
         return "Unknown spell"
 
     @dispatch.register(int)
@@ -64,6 +64,11 @@ def spell_dispatcher() -> callable:
     return dispatch
 
 
+#  def my_base_enchantment(power: int, element: str, item: str) -> str:
+#      return f"✨ Зачаровано {item}: додано {power} шкоди "
+#               f"від стихії {element}!"
+
+
 def main() -> None:
     print("\nTesting spell reducer...")
     spells = [10, 20, 30, 40]
@@ -75,6 +80,16 @@ def main() -> None:
     print(f"Fib(10): {memoized_fibonacci(10)}")
     print(f"Fib(15): {memoized_fibonacci(15)}")
 
+
+#    print("\nTesting spell dispatcher...")
+#    cast_spell = spell_dispatcher()
+#    print(cast_spell(100))                 # Має викликати damage
+#    print(cast_spell("Invisibility"))      # Має викликати enchantment
+#    print(cast_spell([50, "Haste", 20]))   # Має обробити список!
+#    print("\nTesting partial enchanter...")
+#    enchantment_book = partial_enchanter(my_base_enchantment)
+#    apply_fire = enchantment_book["fire_enchant"]
+#    print(apply_fire("Меч"))
 
 if __name__ == "__main__":
     main()

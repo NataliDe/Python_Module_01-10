@@ -19,7 +19,7 @@ def spell_accumulator(initial_power: int) -> callable:
         try:
             total += amount
         except TypeError:
-            # Graceful fallback if amount isn't a number
+            # isn't a number
             return total
         return total
 
@@ -45,7 +45,7 @@ def memory_vault() -> dict[str, callable]:
         try:
             storage[key] = value
         except Exception:
-            # Do nothing (graceful)
+            # nothing
             return
 
     def recall(key: str) -> object:
@@ -71,3 +71,13 @@ if __name__ == "__main__":
     frozen = enchantment_factory("Frozen")
     print(flaming("Sword"))
     print(frozen("Shield"))
+
+    #  power_new = spell_accumulator(12)
+    #  power_res = power_new(3)
+    #  print(f"Toatl is {power_res}")
+
+    #  vault = memory_vault()
+    #  save_spell = vault["store"]
+    #  get_spell = vault["recall"]
+    #  save_spell("fireball", "Opis fireball")
+    #  print(get_spell("fireball"))

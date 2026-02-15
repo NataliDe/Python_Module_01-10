@@ -85,3 +85,4 @@ if __name__ == "__main__":
     spells_demo = ["fireball", "heal", "shield"]
     transformed = spell_transformer(spells_demo)
     print(" ".join(transformed))
+    #  print(mage_stats(artifacts_demo))

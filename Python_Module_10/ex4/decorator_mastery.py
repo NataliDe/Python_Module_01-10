@@ -83,18 +83,18 @@ class MageGuild:
 
 
 @retry_spell(max_attempts=3)
-@spell_timer
+@spell_timer       # знизу вгору
 def fireball() -> str:
     time.sleep(0.101)
     return "Fireball cast!"
 
 
 def main() -> None:
-    print("Testing spell timer...")
+    print("\nTesting spell timer...")
     result = fireball()
     print(f"Result: {result}")
 
-    print("Testing MageGuild...")
+    print("\nTesting MageGuild...")
     print(MageGuild.validate_mage_name("Ariana"))
     print(MageGuild.validate_mage_name("X1"))
 

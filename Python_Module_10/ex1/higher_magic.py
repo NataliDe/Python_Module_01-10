@@ -41,6 +41,13 @@ def fireball_damage(target: str) -> int:
     return 10
 
 
+def is_boss(target: str) -> bool:
+    if target == "Dragon":
+        return True
+    else:
+        return False
+
+
 def main() -> None:
     print("\nTesting spell combiner...")
     combined = spell_combiner(fireball, heal)
@@ -52,6 +59,13 @@ def main() -> None:
     original = fireball_damage("Dragon")
     amplified = mega_fireball("Dragon")
     print("Original: " + str(original) + ", Amplified: " + str(amplified))
+
+    #  print("\nTesting conditional caster...")
+    #  boss_only_fireball = conditional_caster(is_boss, fireball)
+    #  print("Against Dragon: " + boss_only_fireball("Dragon"))
+    #  listes = [heal, fireball]
+    #  spel_s = spell_sequence(listes)
+    #  print(spel_s("Dragon"))
 
 
 if __name__ == "__main__":
